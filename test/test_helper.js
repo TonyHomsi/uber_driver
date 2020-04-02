@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 before(done => {
-    mongoose.connect('mongodb://localhost/uber_drivers');
+    mongoose.connect('mongodb://localhost/uber_driver');
     mongoose.connection
         .once('open', () => done())
         .on('error', err => {

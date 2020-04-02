@@ -19,4 +19,39 @@ describe('Drivers controller', () => {
                 });
         });
     });
+
+    it('PUT to /api/drivers/id edits and existing drivers', (done) => {
+        const driver = new Driver({ email: 't@t.com', driving: false });
+
+        driver.save().then(() => {
+            request(app)
+                .put(`/api/drivers/${driver._id}`)
+                .send({ driving: true })
+                .end(() => {
+                    Driver.findOne({ email: 't@t.com' })
+                        .then(driver => {
+                            assert.equal(driver.driving, true);
+                            done();
+                        });
+                });
+        });
+
+    });
+
+    it('DELTE to /api/drivers/id can delete a driver', (done) => {
+        const driver = new Driver({ email: 'test@test.com' });
+
+        driver.save().then(() => {
+            request(app)
+                .delete(`/api/drivers/${driver._id}`)
+                .end(() => {
+                    Driver.findOne({ email: 'test@test.com' })
+                        .then((driver) => {
+                            assert(driver === null);
+                            done();
+                        });
+                });
+        });
+
+    });
 });
