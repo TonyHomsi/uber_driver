@@ -9,6 +9,7 @@ describe('The express app', () => {
             .end((err, response) => {
                 console.log(response);
                 assert.equal(response.body.hi, 'tony');
+                assert.equal(response.unauthorized, false);
                 done();
             });
     });
