@@ -5,6 +5,18 @@ module.exports = {
         res.send({ hi: 'tony' });
     },
 
+    index(req, res, next) {
+        const { lng, lat } = req.query;
+        // 'http://google.com?lng=80&lat=20'
+
+        Driver.geoNear(
+            { type: 'Point', coordinates: [parseFloat(lng), parseFloat(lat)] },
+            { spherical: true, maxDistance: 200000 }
+        )
+            .then(drivers => res.send(drivers))
+            .catch(next);
+    },
+
     create(req, res, next) {
         const driverProps = req.body;
 
